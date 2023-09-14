@@ -1,6 +1,8 @@
+// ZERO CLEANING UP FOR SIMPLE PROJECT! MESS YOURSELF LATER
+
 const mongoose = require("mongoose");
 
-const { categoryRepo, foodRepo } = require("../repositories/index");
+const { categoryRepo } = require("../repositories/index");
 
 const errorMessages = require("../utils/error_messages.json");
 
@@ -56,15 +58,7 @@ const modify_category = async (req, res) => {
       new: true,
       select: { _id: 1 },
     });
-    for (let i = 0; i < objectIdFoods.length; i++) {
-      await foodRepo.updateById(
-        objectIdFoods[i],
-        {
-          $push: { categories: mongoose.Types.ObjectId(category._id) },
-        },
-        { new: true, select: { _id: 1 } }
-      );
-    }
+    res.status(200).json(category);
   } catch (error) {
     console.error(error);
     res
@@ -76,15 +70,9 @@ const modify_category = async (req, res) => {
 const delete_category = async (req, res) => {
   try {
     const id = req.params.id;
-    const category = await categoryRepo.deleteById(id, {
+    await categoryRepo.deleteById(id, {
       _id: 1,
-      foods: 1,
     });
-    for (let i = 0; i < category.foods.length; i++) {
-      await foodRepo.updateById(category.foods[i], {
-        $pull: { categories: mongoose.Types.ObjectId(category._id) },
-      });
-    }
     res.status(200).json({ message: "Sucessfully deleted" });
   } catch (error) {
     console.error(error);
@@ -103,15 +91,6 @@ const add_category = async (req, res) => {
     });
     data.foods = objectIdFoods;
     const category = await categoryRepo.insert(data);
-    for (let i = 0; i < objectIdFoods.length; i++) {
-      await foodRepo.updateById(
-        objectIdFoods[i],
-        {
-          $push: { categories: mongoose.Types.ObjectId(category._id) },
-        },
-        { new: true, select: { _id: 1 } }
-      );
-    }
     res.status(200).json(category);
   } catch (error) {
     console.error(error);

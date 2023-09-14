@@ -14,15 +14,10 @@ const foodSchema = new Schema({
   name: String,
   urlName: String,
   image: String,
+  deleteHashImage: String,
   price: Number,
   isDisplayed: Boolean,
   nutrition: nutritionSchema,
-  categories: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Category",
-    },
-  ],
 });
 
 module.exports = model("Food", foodSchema);
