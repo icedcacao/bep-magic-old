@@ -31,10 +31,13 @@ const get_category_by_Id = async (req, res) => {
   }
 };
 
-const get_category_by_urlName = async (req, res) => {
+const get_category_by_categoryUrl = async (req, res) => {
   try {
-    const urlName = req.params.urlName;
-    const category = await categoryRepo.findOne({ urlName: urlName }, "foods");
+    const categoryUrl = req.params.categoryUrl;
+    const category = await categoryRepo.findOne(
+      { categoryUrl: categoryUrl },
+      "foods"
+    );
     res.status(200).json(category);
   } catch (error) {
     console.error(error);
@@ -103,7 +106,7 @@ const add_category = async (req, res) => {
 module.exports = {
   get_all_categories,
   get_category_by_Id,
-  get_category_by_urlName,
+  get_category_by_categoryUrl,
   modify_category,
   delete_category,
   add_category,

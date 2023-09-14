@@ -12,7 +12,7 @@ const nutritionSchema = new Schema({
 
 const foodSchema = new Schema({
   name: String,
-  urlName: String,
+  categoryUrl: String,
   image: String,
   deleteHashImage: String,
   price: Number,

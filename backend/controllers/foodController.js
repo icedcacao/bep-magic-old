@@ -34,10 +34,10 @@ const get_food_by_Id = async (req, res) => {
   }
 };
 
-const get_food_by_urlName = async (req, res) => {
+const get_food_by_foodUrl = async (req, res) => {
   try {
-    const urlName = req.params.urlName;
-    const food = await foodRepo.findOne({ urlName: urlName });
+    const foodUrl = req.params.foodUrl;
+    const food = await foodRepo.findOne({ foodUrl: foodUrl });
     res.status(200).json(food);
   } catch (error) {
     console.error(error);
@@ -89,10 +89,10 @@ const add_food = async (req, res) => {
       image: base64image,
       type: "base64",
     });
-    const urlName = format_url_name(raw_data.name);
+    const foodUrl = format_url_name(raw_data.name);
     const data = {
       name: raw_data.name,
-      urlName: urlName,
+      foodUrl: foodUrl,
       image: response.data.link,
       deleteHashImage: response.data.deletehash,
       price: parseInt(raw_data.price),
@@ -120,7 +120,7 @@ const add_food = async (req, res) => {
 module.exports = {
   get_all_foods,
   get_food_by_Id,
-  get_food_by_urlName,
+  get_food_by_foodUrl,
   modify_food,
   delete_food,
   add_food,

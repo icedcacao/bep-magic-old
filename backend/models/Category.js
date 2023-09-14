@@ -2,7 +2,7 @@ const { model, Schema } = require("mongoose");
 
 const categorySchema = new Schema({
   name: String,
-  urlName: String,
+  categoryUrl: String,
   foods: [
     {
       type: Schema.Types.ObjectId,

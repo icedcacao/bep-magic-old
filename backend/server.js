@@ -5,7 +5,7 @@ const cors = require("cors");
 
 require("dotenv").config;
 
-// const apiRoutes = require("./routes/apiRoutes");
+const apiRoutes = require("./routes/apiRoutes");
 
 const setupServer = async () => {
   const app = express();
@@ -15,7 +15,7 @@ const setupServer = async () => {
   app.use(cors());
   app.use(morgan("dev"));
   app.use(cookieParser());
-  //   app.use("/", apiRoutes);
+  app.use("/", apiRoutes);
   return app.listen({ port: process.env.PORT || 3000 }, () => {
     console.log(`Server is running at http://localhost:${process.env.PORT}`);
   });
