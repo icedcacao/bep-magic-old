@@ -1,9 +1,8 @@
-// ZERO CLEANING UP FOR SIMPLE PROJECT! MESS YOURSELF LATER
-
 const mongoose = require("mongoose");
 
 const { categoryRepo } = require("../repositories/index");
 
+const format_url_name = require("../utils/formatUrlName");
 const errorMessages = require("../utils/error_messages.json");
 
 const get_all_categories = async (req, res) => {
@@ -52,11 +51,18 @@ const modify_category = async (req, res) => {
   try {
     const id = req.params.id;
     const data = req.body;
-    const objectIdFoods = [];
-    data.foods.forEach((food) => {
-      objectIdFoods.push(mongoose.Types.ObjectId(food));
-    });
-    data.foods = objectIdFoods;
+    // Detecting change in name
+    if (data.hasOwnProperty("name")) {
+      data.categoryUrl = format_url_name(data.name);
+    }
+    if (data.hasOwnProperty("foods")) {
+      const objectIdFoods = [];
+      data.foods.forEach((food) => {
+        objectIdFoods.push(new mongoose.Types.ObjectId(food));
+      });
+      data.foods = objectIdFoods;
+    }
+
     const category = await categoryRepo.updateById(id, data, {
       new: true,
       select: { _id: 1 },
@@ -88,11 +94,14 @@ const delete_category = async (req, res) => {
 const add_category = async (req, res) => {
   try {
     const data = req.body;
-    const objectIdFoods = [];
-    data.foods.forEach((food) => {
-      objectIdFoods.push(mongoose.Types.ObjectId(food));
-    });
-    data.foods = objectIdFoods;
+    data.categoryUrl = format_url_name(data.name);
+    if (data.hasOwnProperty("foods")) {
+      const objectIdFoods = [];
+      data.foods.forEach((food) => {
+        objectIdFoods.push(new mongoose.Types.ObjectId(food));
+      });
+      data.foods = objectIdFoods;
+    }
     const category = await categoryRepo.insert(data);
     res.status(200).json(category);
   } catch (error) {

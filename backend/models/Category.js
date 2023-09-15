@@ -1,7 +1,10 @@
 const { model, Schema } = require("mongoose");
 
 const categorySchema = new Schema({
-  name: String,
+  name: {
+    type: String,
+    required: true, // This field is required
+  },
   categoryUrl: String,
   foods: [
     {

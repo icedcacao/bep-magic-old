@@ -8,9 +8,9 @@ const findAll = async (condition) => {
   }
 };
 
-const findOneById = async (id) => {
+const findOneById = async (id, options) => {
   try {
-    return await Food.findById(id).lean();
+    return await Food.findById(id, options).lean();
   } catch (error) {
     throw new Error(error);
   }

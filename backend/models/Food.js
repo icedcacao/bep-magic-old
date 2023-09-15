@@ -11,8 +11,11 @@ const nutritionSchema = new Schema({
 });
 
 const foodSchema = new Schema({
-  name: String,
-  categoryUrl: String,
+  name: {
+    type: String,
+    required: true,
+  },
+  foodUrl: String,
   image: String,
   deleteHashImage: String,
   price: Number,

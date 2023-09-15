@@ -1,10 +1,14 @@
 const express = require("express");
+const multer = require("multer");
 
 const {
   categoryController,
   foodController,
   userController,
 } = require("../controllers/indexController");
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 const authCheck = require("../utils/authCheck");
 
@@ -18,11 +22,11 @@ router.get("/auth", authCheck, userController.auth);
 router
   .route("/food")
   .get(foodController.get_all_foods)
-  .post(authCheck, foodController.add_food);
+  .post(authCheck, upload.single("image"), foodController.add_food);
 router
   .route("/id/food/:id")
   .get(authCheck, foodController.get_food_by_Id)
-  .put(authCheck, foodController.modify_food)
+  .put(authCheck, upload.single("image"), foodController.modify_food)
   .delete(authCheck, foodController.delete_food);
 router.get("/url/food/:foodUrl", foodController.get_food_by_foodUrl);
 
@@ -37,7 +41,7 @@ router
   .put(authCheck, categoryController.modify_category)
   .delete(authCheck, categoryController.delete_category);
 router.get(
-  "url/food/:categoryUrl",
+  "/url/category/:categoryUrl",
   categoryController.get_category_by_categoryUrl
 );
 

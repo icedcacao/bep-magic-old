@@ -1,13 +1,8 @@
-const removeAccents = require("remove-accents");
 const { foodRepo } = require("../repositories/index");
 const client = require("../utils/imgurConnection");
+const format_url_name = require("../utils/formatUrlName");
 
 const errorMessages = require("../utils/error_messages.json");
-
-const format_url_name = (name) => {
-  const output = removeAccents(name);
-  return output.replace(/ /g, "-");
-};
 
 const get_all_foods = async (req, res) => {
   try {
@@ -24,7 +19,7 @@ const get_all_foods = async (req, res) => {
 const get_food_by_Id = async (req, res) => {
   try {
     const id = req.params.id;
-    const food = await foodRepo.findOneById(id);
+    const food = await foodRepo.findOneById(id, {});
     res.status(200).json(food);
   } catch (error) {
     console.error(error);
@@ -47,12 +42,23 @@ const get_food_by_foodUrl = async (req, res) => {
   }
 };
 
-// If you have your picture wrong! Just delete and add the item again!
-// Too lazy to implement that feature!
 const modify_food = async (req, res) => {
   try {
     const id = req.params.id;
     const data = req.body;
+    // Modifying images
+    if (req.file && req.file.size !== 0) {
+      const deleteHash = await foodRepo.findOneById(id, { deleteHashImage: 1 });
+      client.deleteImage(deleteHash);
+      const fileBuffer = req.file.buffer;
+      const base64image = fileBuffer.toString("base64");
+      const response = await client.upload({
+        image: base64image,
+        type: "base64",
+      });
+      data.image = response.data.link;
+      data.deleteHashImage = response.data.deletehash;
+    }
     const food = await foodRepo.updateById(id, data, {
       new: true,
       select: { _id: 1 },
