@@ -33,8 +33,8 @@ export default function Navigation() {
                 <MultiNav
                   label="CRUD"
                   navItems={[
-                    { label: "Foods", link: "/foods" },
-                    { label: "Categories", link: "/categories" },
+                    { label: "Foods", link: "/food" },
+                    { label: "Categories", link: "/category" },
                   ]}
                   icon={
                     <HiTableCells className="flex-shrink-0 w-6 h-6 text-gray-500 group-hover:text-gray-900" />
