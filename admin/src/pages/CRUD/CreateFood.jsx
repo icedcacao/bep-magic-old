@@ -1,4 +1,5 @@
 import { useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import InputString from "../../components/CRUD/InputString";
 import Header from "../../components/Header/Header";
 import SubmitButton from "../../components/CRUD/SubmitButton";
@@ -21,7 +22,8 @@ export default function CreateFood() {
   const handleChange = (e) => {
     setformValue({ ...formValue, [e.target.name]: e.target.value });
   };
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     const createFoodFormData = new FormData();
     createFoodFormData.append("name", formValue.name);
     createFoodFormData.append("price", formValue.price);
@@ -32,13 +34,29 @@ export default function CreateFood() {
     createFoodFormData.append("carb", formValue.carb);
     createFoodFormData.append("fiber", formValue.fiber);
     createFoodFormData.append("others", formValue.others);
-    // Putting axios post here!!!
+    try {
+      const url = `http://localhost:3000/food`;
+      const response = await axios({
+        method: "post",
+        url: url,
+        data: createFoodFormData,
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      if (response.status == 200) {
+        toast.success("Sucessfully updated");
+      } else {
+        toast.error("Unable to submit");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Unable to submit");
+    }
   };
   return (
     <>
       <Header title="Create food" />
       <div className="p-4">
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="space-y-4">
             <InputString
               labelName="Name"

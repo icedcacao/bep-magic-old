@@ -8,7 +8,7 @@ export default function InputImage({ label, name, handleChange }) {
         {label}
       </label>
       <input
-        className="text-gray-400 border rounded-lg file:bg-gray-50 file:text-gray-500 hover:file:bg-gray-100 file:rounded-lg file:rounded-tr-none file:rounded-br-none file:px-4 file:py-2 file:mr-4 file:border-none hover:cursor-pointer"
+        className="w-1/2 text-gray-400 border rounded-lg xl:w-1/3 file:bg-gray-50 file:text-gray-500 hover:file:bg-gray-100 file:rounded-lg file:rounded-tr-none file:rounded-br-none file:px-4 file:py-2 file:mr-4 file:border-none hover:cursor-pointer"
         type="file"
         name={name}
         accept="image/*"
