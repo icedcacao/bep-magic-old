@@ -44,7 +44,7 @@ export default function Navigation() {
             </div>
           </div>
           <div className="absolute bottom-0 left-0 flex justify-center w-full p-4 space-x-4 bg-white">
-            {/* <Link
+            <Link
               className="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100"
               to="/logout"
             >
@@ -55,7 +55,7 @@ export default function Navigation() {
               to="/settings"
             >
               <HiAdjustmentsVertical className="w-6 h-6" />
-            </Link> */}
+            </Link>
           </div>
         </div>
       </aside>

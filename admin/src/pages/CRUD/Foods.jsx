@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import CRUDHeader from "../../components/Header/CRUDHeader";
 import TableHeadItem from "../../Table/TableHeadItem";
 import CRUDMainLayout from "../../components/layout/CRUDMainLayout";
@@ -10,15 +9,15 @@ import FoodTableItem from "../../components/FoodTableItem";
 export default function Foods() {
   const { foods, fetchFoods } = useAppContext();
   useEffect(() => {
-    async () => {
-      await fetchFoods();
-    };
-    console.log(foods);
+    if (foods.length === 0) {
+      fetchFoods();
+    }
   }, []);
   return (
     <>
       <CRUDHeader
         title="All foods"
+        handleRefresh={fetchFoods}
         createButtonLabel="Create food"
         createButtonLink="/food/create"
       />
@@ -42,18 +41,19 @@ export default function Foods() {
           <tbody className="bg-white divide-y divide-gray-200">
             {foods.map((item) => (
               <FoodTableItem
+                key={item._id}
                 name={item.name}
                 foodUrl={item.foodUrl}
                 image={item.image}
                 price={item.price}
                 isDisplayed={item.isDisplayed}
-                calories={item.calories}
-                protein={item.protein}
-                fat={item.fat}
-                carb={item.carb}
-                fiber={item.fiber}
-                vitamins={item.vitamins}
-                others={item.others}
+                calories={item.nutrition.calories}
+                protein={item.nutrition.protein}
+                fat={item.nutrition.fat}
+                carb={item.nutrition.carb}
+                fiber={item.nutrition.fiber}
+                vitamins={item.nutrition.vitamins}
+                others={item.nutrition.others}
               />
             ))}
           </tbody>

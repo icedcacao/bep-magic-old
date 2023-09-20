@@ -40,7 +40,6 @@ export default function CreateFood() {
         method: "post",
         url: url,
         data: createFoodFormData,
-        headers: { "Content-Type": "multipart/form-data" },
       });
       if (response.status == 200) {
         toast.success("Sucessfully updated");

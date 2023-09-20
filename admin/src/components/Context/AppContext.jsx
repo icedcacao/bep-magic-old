@@ -15,7 +15,6 @@ export const AppProvider = ({ children }) => {
         url: url,
       });
       setFoods(response.data);
-      console.log(foods);
       return;
     } catch (error) {
       console.error(error);

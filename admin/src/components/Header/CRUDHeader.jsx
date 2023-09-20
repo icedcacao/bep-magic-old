@@ -1,7 +1,9 @@
+import { HiArrowPath } from "react-icons/hi2";
 import { Link } from "react-router-dom";
 
 export default function CRUDHeader({
   title,
+  handleRefresh,
   createButtonLabel,
   createButtonLink,
 }) {
@@ -29,6 +31,14 @@ export default function CRUDHeader({
           </form>
         </div> */}
           {/* Adding Search */}
+          <div className="flex items-center mb-0">
+            <button
+              className="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100"
+              onClick={handleRefresh}
+            >
+              <HiArrowPath className="w-6 h-6" />
+            </button>
+          </div>
           <Link
             className="text-white bg-lime-700 hover:bg-lime-800 focus:ring-4 focus:ring-lime-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none"
             to={createButtonLink}
