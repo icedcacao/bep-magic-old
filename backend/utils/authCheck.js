@@ -7,7 +7,6 @@ const errorMessages = require("./error_messages.json");
 
 const authCheck = async (req, res, next) => {
   const { token } = req.cookies;
-  console.log(`token: ${token}`);
   if (!token) {
     return res
       .status(errorMessages.UNAUTHORIZED.code)
