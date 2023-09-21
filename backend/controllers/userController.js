@@ -23,8 +23,7 @@ const login = async (req, res) => {
     if (!user) {
       throw errorMessages.UNAUTHORIZED;
     }
-
-    const isPasswordMatch = bcrypt.compare(password, user.password);
+    const isPasswordMatch = await bcrypt.compare(password, user.password);
     if (!isPasswordMatch) {
       throw errorMessages.UNAUTHORIZED;
     }

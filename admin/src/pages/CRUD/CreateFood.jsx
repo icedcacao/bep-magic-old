@@ -36,11 +36,14 @@ export default function CreateFood() {
     createFoodFormData.append("others", formValue.others);
     try {
       const url = `http://localhost:3000/food`;
-      const response = await axios({
-        method: "post",
-        url: url,
-        data: createFoodFormData,
-      });
+      const response = await axios(
+        {
+          method: "post",
+          url: url,
+          data: createFoodFormData,
+        },
+        { withCredentials: true }
+      );
       if (response.status == 200) {
         toast.success("Sucessfully updated");
       } else {
