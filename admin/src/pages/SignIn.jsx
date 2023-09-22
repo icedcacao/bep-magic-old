@@ -3,6 +3,8 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 
+import { updateAxiosToken } from "../util";
+
 export default function SignIn() {
   const [formValue, setformValue] = useState({ username: "", password: "" });
   const handleChange = (e) => {
@@ -21,11 +23,9 @@ export default function SignIn() {
         data: SignInFormData,
         headers: { "Content-Type": "application/json" },
       });
-      if (response.status == 200) {
-        toast.success("Sucessfully login");
-      } else {
-        toast.error("Unable to submit");
-      }
+      const token = response.data.token;
+      localStorage.setItem("token", token);
+      updateAxiosToken()
     } catch (error) {
       console.error(error);
       toast.error("Unable to submit");

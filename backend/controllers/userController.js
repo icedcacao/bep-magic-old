@@ -31,11 +31,7 @@ const login = async (req, res) => {
     const token = generateToken(user);
     res
       .status(200)
-      .cookie("token", token, {
-        httpOnly: true,
-        maxAge: 1000 * 60 * 60 * 5,
-      })
-      .json({ message: "Success" });
+      .json({ message: "Success", token: token });
   } catch (error) {
     res.status(error.code).json({ Error: error.message });
   }

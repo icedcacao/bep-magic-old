@@ -8,4 +8,12 @@ const findOne = async (condition) => {
   }
 };
 
-module.exports = { findOne };
+const findById = async (id) => {
+  try {
+    return await User.findById(id);
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
+module.exports = { findOne, findById };
